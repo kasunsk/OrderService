@@ -1,6 +1,7 @@
 package com.mycompany.orderservice.controller;
 
 import com.mycompany.orderservice.dto.Order;
+import com.mycompany.orderservice.param.OrderResponse;
 import com.mycompany.orderservice.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,7 @@ public class OrderController {
     private OrderService orderService;
 
     @RequestMapping(value = "/{customerName}", method = RequestMethod.GET)
-    public Order retrieveOrder(@PathVariable("customerName") String customerName) {
+    public OrderResponse retrieveOrder(@PathVariable("customerName") String customerName) {
         return orderService.retrieveOrder(customerName);
     }
 

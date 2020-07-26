@@ -18,20 +18,20 @@ public class OrderItemServiceClient {
 
     private static final String baseUrl = "http://localhost:8282/orderitem";
 
-//    @Autowired
-//    private RestTemplate restTemplate;
-//
-//    List<OrderItem> getOrderItemsByOrderId(Long orderId) {
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-//        HttpEntity<String> entity = new HttpEntity<>(headers);
-//        return restTemplate.exchange(baseUrl + "/" + orderId, HttpMethod.GET, entity, List.class).getBody();
-//    }
-//
-//    Boolean createOrderItems(OrderItemCreationRequest request) {
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-//        HttpEntity<OrderItemCreationRequest> entity = new HttpEntity<>(request, headers);
-//        return restTemplate.exchange(baseUrl + "/create", HttpMethod.GET, entity, Boolean.class).getBody();
-//    }
+    @Autowired
+    private RestTemplate restTemplate;
+
+    public List<OrderItem> getOrderItemsByOrderId(Long orderId) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        return restTemplate.exchange(baseUrl + "/" + orderId, HttpMethod.GET, entity, List.class).getBody();
+    }
+
+    public Boolean createOrderItems(OrderItemCreationRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpEntity<OrderItemCreationRequest> entity = new HttpEntity<>(request, headers);
+        return restTemplate.exchange(baseUrl + "/create", HttpMethod.POST, entity, Boolean.class).getBody();
+    }
 }
