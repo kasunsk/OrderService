@@ -4,6 +4,8 @@ import com.mycompany.orderservice.adaptor.OrderAdapter;
 import com.mycompany.orderservice.client.OrderItemServiceClient;
 import com.mycompany.orderservice.dao.OrderDao;
 import com.mycompany.orderservice.dto.Order;
+import com.mycompany.orderservice.exception.ErrorCode;
+import com.mycompany.orderservice.exception.ServiceRuntimeException;
 import com.mycompany.orderservice.model.OrderItem;
 import com.mycompany.orderservice.model.OrderModel;
 import com.mycompany.orderservice.param.OrderItemCreationRequest;
@@ -50,10 +52,8 @@ public class OrderServiceImpl implements OrderService {
         OrderItemCreationRequest request = new OrderItemCreationRequest();
         request.setOrderId(orderId);
         request.setOrderItemModelList(orderItems);
-        if (orderItemServiceClient.createOrderItems(request)) {
-            log.info("Order items created");
-        } else {
-            log.info("Unable to create Order Items");
+        if (!orderItemServiceClient.createOrderItems(request)) {
+            throw new ServiceRuntimeException(ErrorCode.CAN_NOT_CREATE, "Unable to create Order Items");
         }
     }
 
@@ -69,6 +69,7 @@ public class OrderServiceImpl implements OrderService {
             orderResp.setOrderItems(orderItems);
         } else {
             log.info("Order not found for customer name : {}", customerName);
+            throw new ServiceRuntimeException(ErrorCode.NOT_FOUND, "Order not found for customer name " + customerName);
         }
         return orderResp;
     }
